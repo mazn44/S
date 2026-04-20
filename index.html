@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>قسم السائقين والتوصيل | معرض إيفان</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* =========================================
+           الثيم الأخضر الملكي (هادئ وراقي)
+           ========================================= */
+        :root {
+            --bg-base: #030d08;
+            --bg-surface: rgba(6, 40, 25, 0.75);
+            --bg-card: rgba(10, 50, 30, 0.6);
+            --bg-card-hover: rgba(15, 65, 40, 0.85);
+            
+            --primary: #10b981; /* أخضر زمردي مريح */
+            --primary-glow: rgba(16, 185, 129, 0.4);
+            --secondary: #34d399; 
+            --gold: #fbbf24; /* للجوائز والكؤوس */
+            --gold-glow: rgba(251, 191, 36, 0.4);
+            
+            --border-glass: rgba(16, 185, 129, 0.3);
+            
+            --text-main: #f8fafc;
+            --text-muted: #a7f3d0;
+            --badini-text: #6ee7b7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: all 0.4s ease; }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            overflow-x: hidden; 
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* جزيئات هادئة جداً (بدون سرعة) */
+        #particles-canvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+        /* =========================================
+           الترويسة (أيقونة الشاحنة الفخمة)
+           ========================================= */
+        .hero-section {
+            padding: 8vh 15px 6vh; text-align: center; 
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, transparent 100%);
+            border-bottom: 1px solid var(--border-glass);
+            position: relative;
+        }
+        
+        /* أيقونة سيارة واضحة وثابتة مع وميض هادئ */
+        .truck-icon {
+            width: clamp(70px, 12vw, 110px); height: clamp(70px, 12vw, 110px);
+            fill: var(--primary); margin: 0 auto 15px;
+            filter: drop-shadow(0 0 20px var(--primary-glow));
+            animation: gentle-glow 3s infinite alternate;
+        }
+        @keyframes gentle-glow {
+            0% { filter: drop-shadow(0 0 15px var(--primary-glow)); transform: scale(1); }
+            100% { filter: drop-shadow(0 0 35px var(--primary-glow)); transform: scale(1.02); }
+        }
+
+        .hero-section h1 { font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 900; color: var(--text-main); margin-bottom: 8px; text-shadow: 0 4px 15px rgba(0,0,0,0.5);}
+        .hero-section h2 { font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 800; color: var(--secondary); margin-bottom: 20px; letter-spacing: 1px;}
+        
+        .honor-motto {
+            display: inline-flex; align-items: center; gap: 12px; background: rgba(251, 191, 36, 0.1);
+            border: 1px solid var(--gold); color: var(--gold); padding: 12px 35px;
+            border-radius: 40px; font-weight: 900; font-size: clamp(1.1rem, 2.5vw, 1.4rem); margin-bottom: 25px;
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        /* =========================================
+           لوحة الشرف (جوائز وكؤوس الفريق)
+           ========================================= */
+        .champions-board {
+            background: linear-gradient(135deg, rgba(251,191,36,0.05), rgba(16,185,129,0.05));
+            border: 2px solid var(--gold); border-radius: 30px; padding: 45px 20px;
+            max-width: 1300px; margin: 30px auto 0; box-shadow: inset 0 0 40px rgba(251,191,36,0.1);
+            text-align: center; position: relative;
+        }
+        .champions-board h3 { color: var(--gold); font-size: 1.8rem; font-weight: 900; margin-bottom: 30px; }
+
+        .manager-trophy {
+            display: inline-flex; align-items: center; gap: 15px; background: rgba(251, 191, 36, 0.2);
+            border: 2px solid var(--gold); color: var(--text-main); padding: 15px 50px;
+            border-radius: 40px; font-weight: 900; font-size: clamp(1.3rem, 2.5vw, 1.6rem); margin-bottom: 35px;
+            box-shadow: 0 0 30px var(--gold-glow);
+        }
+        .manager-trophy i { color: var(--gold); font-size: 1.8rem; }
+
+        .staff-grid { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap;}
+        .staff-medal {
+            background: var(--bg-card); border: 1px solid var(--border-glass); 
+            padding: 12px 28px; border-radius: 30px; font-weight: 900; color: var(--text-main); 
+            font-size: clamp(1.05rem, 1.5vw, 1.2rem); display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: 0.4s;
+        }
+        .staff-medal i { color: var(--secondary); font-size: 1.3rem;}
+        .staff-medal:hover { background: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 25px var(--primary-glow); border-color: var(--primary);}
+        .staff-medal:hover i { color: #fff; }
+        
+        .special-medal { border-color: var(--gold); background: rgba(251, 191, 36, 0.1); }
+        .special-medal i { color: var(--gold); }
+
+        /* =========================================
+           الهيكل العرضي للبطاقات
+           ========================================= */
+        .container { width: 100%; max-width: 1500px; margin: 0 auto; padding: 50px 15px; }
+
+        .section-header {
+            display: flex; align-items: center; gap: 15px; margin-bottom: 35px;
+            border-bottom: 2px solid var(--border-glass); padding-bottom: 15px;
+        }
+        .section-header i { font-size: clamp(1.8rem, 3vw, 2.2rem); color: var(--gold); }
+        .section-header h2 { font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 900; color: var(--text-main); }
+
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        
+        .card {
+            background: var(--bg-surface); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border-glass); border-radius: 24px; padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); transition: all 0.4s ease;
+            display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); background: var(--bg-card-hover); box-shadow: 0 15px 40px var(--primary-glow); }
+        
+        .card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+        .card-header i { font-size: 2rem; color: var(--primary); }
+        .card-header h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); font-weight: 900; color: var(--text-main); }
+
+        /* =========================================
+           القوائم الإيجابية (معايير الاحتراف)
+           ========================================= */
+        .rules-ul { list-style: none; display: flex; flex-direction: column; gap: 22px; }
+        .rules-ul li { position: relative; padding-right: 55px; font-size: clamp(1.1rem, 2vw, 1.2rem); line-height: 1.7; color: var(--text-muted); font-weight: 600;}
+        .rules-ul li strong { color: var(--text-main); font-weight: 900; display: block; margin-bottom: 6px; font-size: 1.1em;}
+        .rules-ul li::before {
+            position: absolute; right: 0; top: 4px; width: 36px; height: 36px; border-radius: 10px;
+            display: flex; justify-content: center; align-items: center; font-size: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-family: 'Font Awesome 6 Free'; font-weight: 900;
+        }
+        
+        /* علامة التميز */
+        .gold-rules li::before { content: '\f091'; color: var(--gold); background: rgba(251, 191, 36, 0.15); border: 1px solid var(--gold);}
+        /* علامة الحذر والتركيز */
+        .focus-rules li::before { content: '\f06e'; color: var(--secondary); background: rgba(16, 185, 129, 0.15); border: 1px solid var(--secondary);}
+
+        /* =========================================
+           روتين العناية بالكيا (Kia Dashboard)
+           ========================================= */
+        .kia-dashboard {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 78, 59, 0.3));
+            border: 2px solid var(--primary); border-radius: 30px; padding: 45px; margin-bottom: 60px;
+            text-align: center; box-shadow: inset 0 0 50px rgba(16,185,129,0.1);
+        }
+        .kia-dashboard h3 { font-size: 2rem; font-weight: 900; color: var(--text-main); margin-bottom: 15px; }
+        .kia-dashboard p { font-size: 1.15rem; color: var(--text-muted); font-weight: 600; margin-bottom: 35px; max-width: 800px; margin-left: auto; margin-right: auto;}
+        
+        .checklist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;}
+        .check-item { 
+            background: var(--bg-card); border: 1px solid var(--border-glass); padding: 25px 15px; 
+            border-radius: 20px; font-weight: 900; color: var(--text-main); font-size: 1.1rem;
+            transition: 0.4s; display: flex; flex-direction: column; align-items: center; gap: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .check-item:hover { background: rgba(16,185,129,0.2); border-color: var(--primary); transform: translateY(-5px);}
+        .check-item i { font-size: 2.5rem; color: var(--secondary); filter: drop-shadow(0 0 10px var(--primary-glow));}
+
+        /* =========================================
+           نصوص السكريبتات (عربي / باديني)
+           ========================================= */
+        .script-box {
+            background: var(--bg-card); border-radius: 24px; padding: 35px; margin-bottom: 30px;
+            transition: 0.4s; border: 1px solid var(--border-glass); border-right: 8px solid var(--primary);
+        }
+        .script-box:last-child { margin-bottom: 0; }
+        .script-box:hover { background: var(--bg-card-hover); border-color: var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.3);}
+        
+        .badge { display: inline-block; background: var(--primary-glow); color: #fff; padding: 10px 25px; border-radius: 12px; font-size: 1.1rem; font-weight: 900; margin-bottom: 25px; }
+        
+        .lang-group { margin-bottom: 25px; }
+        .lang-group:last-child { margin-bottom: 0; padding-top: 25px; border-top: 1px dashed var(--border-glass); }
+        .lang-lbl { font-size: 1rem; color: var(--primary); font-weight: 900; margin-bottom: 12px; display: block; text-transform: uppercase;}
+        
+        .arabic-txt { font-size: clamp(1.3rem, 2vw, 1.5rem); font-weight: 900; color: var(--text-main); line-height: 1.7; }
+        .badini-txt { font-size: clamp(1.1rem, 1.5vw, 1.3rem); font-weight: 700; color: var(--badini-text); line-height: 1.7; } 
+
+        /* =========================================
+           الفوتر (قسم التسويق فقط)
+           ========================================= */
+        footer {
+            background: var(--bg-base); border-top: 1px solid var(--border-glass);
+            padding: 60px 20px; text-align: center; margin-top: 40px;
+        }
+        
+        .marketing-credit {
+            display: inline-flex; align-items: center; gap: 12px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--primary);
+            color: var(--primary); padding: 15px 40px; border-radius: 40px; font-size: 1.2rem; font-weight: 900; margin-bottom: 30px;
+            box-shadow: 0 5px 20px var(--primary-glow);
+        }
+        
+        .wa-contact {
+            display: inline-flex; align-items: center; gap: 12px; background: rgba(37, 211, 102, 0.15);
+            border: 1px solid rgba(37, 211, 102, 0.5); color: #25d366; padding: 15px 40px;
+            border-radius: 40px; font-weight: 900; font-size: 1.2rem; text-decoration: none; transition: 0.4s;
+        }
+        .wa-contact:hover { background: #25d366; color: #fff; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); transform: translateY(-3px); }
+
+        @media (max-width: 768px) {
+            .section-header { flex-direction: column; text-align: center; gap: 10px; }
+            .manager-trophy { font-size: 1.1rem; padding: 12px 30px; }
+            .champions-board { padding: 30px 15px; }
+            .staff-medal { font-size: 0.95rem; padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- كانفاس حركة هادئة ومريحة -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- الترويسة و الجوائز -->
+    <header class="hero-section">
+        <!-- أيقونة الشاحنة الفخمة والواضحة -->
+        <svg class="truck-icon" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
+            <path d="M48 0C21.5 0 0 21.5 0 48V368c0 26.5 21.5 48 48 48H64c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H48zM416 160h50.7L544 237.3V256H416V160zM112 416a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm368-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/>
+        </svg>
+
+        <h1> سائقين معرض إيفان </h1>
+        <h2>Delivery & Logistics Team</h2>
+        
+        <div class="honor-motto">
+            <i class="fa-solid fa-trophy"></i> تحدي الاحتراف: صفر ضرر + وصول بالموعد
+        </div>
+
+        <!-- لوحة الكؤوس لأبطال التوصيل -->
+        <div class="champions-board">
+            <h3><i class="fa-solid fa-ranking-star"></i>  السائقين  </h3>
+            
+            <div class="manager-trophy">
+                <i class="fa-solid fa-trophy"></i> المدير : أبو عمر
+            </div>
+            
+            <div class="staff-grid">
+                <div class="staff-medal"><i class="fa-solid fa-medal"></i> شينوار شعبان</div>
+                <div class="staff-medal"><i class="fa-solid fa-medal"></i> برفان</div>
+                <div class="staff-medal"><i class="fa-solid fa-medal"></i> طلال</div>
+                <div class="staff-medal"><i class="fa-solid fa-medal"></i> باسل</div>
+                <div class="staff-medal"><i class="fa-solid fa-medal"></i> هشام</div>
+                <div class="staff-medal"><i class="fa-solid fa-medal"></i> محمد</div>
+                <!-- وسام مميز لأبو علي -->
+                <div class="staff-medal special-medal" title="بطل مزدوج المهام"><i class="fa-solid fa-award"></i> أبو علي (نجار وسائق)</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- ==========================================
+             روتين العناية بسيارات الكيا
+             ========================================== -->
+        <div class="kia-dashboard">
+            <h3><i class="fa-solid fa-truck-moving" style="color:var(--gold);"></i> بروتوكول العناية بالكيا</h3>
+            <p>سيارة الكيا هي شريكتك في النجاح ومصدر رزقك. السائق المحترف يتأكد من جاهزية مركبته صباحاً لينطلق بثقة وبدون أي مفاجآت في الطريق.</p>
+            
+            <div class="checklist-grid">
+                <div class="check-item"><i class="fa-solid fa-oil-can"></i> فحص الزيت والماء</div>
+                <div class="check-item"><i class="fa-solid fa-truck-monster"></i> ضغط وسلامة الإطارات</div>
+                <div class="check-item"><i class="fa-solid fa-gas-pump"></i> جاهزية الوقود</div>
+                <div class="check-item"><i class="fa-solid fa-broom"></i> نظافة الصندوق بالكامل</div>
+                <div class="check-item"><i class="fa-solid fa-anchor"></i> توفر حبال متينة للتثبيت</div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             معايير الاحتراف (بدل المسموح والممنوع)
+             ========================================== -->
+        <div class="section-title">
+            <i class="fa-solid fa-star"></i>
+            <h2>معايير الاحتراف في التوصيل</h2>
+        </div>
+
+        <div class="grid-cards">
+            <!-- معايير التميز الذهبية -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa-solid fa-crown" style="color: var(--gold);"></i>
+                    <h3>بصمة السائق المحترف</h3>
+                </div>
+                <ul class="rules-ul gold-rules">
+                    <li><strong>حماية الأمانة:</strong> التغليف الممتاز قبل الشحن دائماً، واستخدام قطعة موكيت وقطع قماش ناعمة تحت الأثاث داخل الكيا لحمايته من أي احتكاك.</li>
+                    <li><strong>هندسة التحميل:</strong> ترتيب القطع داخل المركبة بذكاء، وتوزيع الأوزان، وربط الحمولة بحبال متينة لمنع حركتها أثناء المطبات.</li>
+                    <li><strong>روح الفريق:</strong> التعاون والمشاركة الإيجابية مع العمال أثناء الرفع والتنزيل لضمان عدم تحميل الثقل على شخص واحد وحماية القطعة.</li>
+                    <li><strong>القيادة الملكية:</strong> القيادة بهدوء، الالتزام بالسرعة القانونية، وتجنب الفرملة المفاجئة للحفاظ على سلامة البضاعة من أي ارتجاج.</li>
+                </ul>
+            </div>
+
+            <!-- أشياء نتجنبها لنبقى في القمة -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa-solid fa-eye" style="color: var(--secondary);"></i>
+                    <h3>ممارسات نتجنبها لنبقى في القمة</h3>
+                </div>
+                <ul class="rules-ul focus-rules">
+                    <li><strong>الخروج بدون تأكيد:</strong> نبتعد عن الخروج بالبضاعة دون استلام <strong>وصل رسمي</strong> ومراجعة العنوان بدقة مع الإدارة.</li>
+                    <li><strong>القسوة في التنزيل:</strong> الأثاث يعامل كأنه زجاج. نتجنب السحب العشوائي للقطع على الأرض أو تنزيلها بقوة تؤذي الأطراف.</li>
+                    <li><strong>المخاطرة العشوائية:</strong> نرفض التحميل فوق طاقة السيارة، ولا نترك أي قطعة حرة بدون تثبيت محكم.</li>
+                    <li><strong>البقاء في الكابينة:</strong> السائق المحترف لا يبقى جالساً في السيارة وقت التحميل والتنزيل، بل يكون أول المبادرين للمساعدة.</li>
+                    <li><strong>الخصوصية:</strong>  عدم مساعدة العمال في التحميل والتنزيل في الخترات .</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             نصوص التعامل والسكربتات
+             ========================================== -->
+        <div class="section-title">
+            <i class="fa-solid fa-headset"></i>
+            <h2>تواصل السائق (مكالمة الزبون)</h2>
+        </div>
+
+        <div class="grid-cards">
+            <div class="card" style="grid-column: 1 / -1;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px;">
+                    
+                    <div class="script-box">
+                        <span class="badge">تأكيد الموعد (مكالمة ما قبل الوصول)</span>
+                        <div class="lang-group">
+                            <span class="lang-lbl">عربي</span>
+                            <div class="arabic-txt">أهلاً عيني، إحنا من إيفان، تقريباً نصل خلال دقائق، ممكن العنوان بالضبط لوتسآب؟</div>
+                        </div>
+                        <div class="lang-group">
+                            <span class="lang-lbl">باديني</span>
+                            <div class="badini-txt">سلاڤ، ئەز لە ئاڤانێ مە — دەوری نزیک رسیدم بگیرم، جهێ خۆ دروست فرێكە.</div>
+                        </div>
+                    </div>
+
+                    <div class="script-box">
+                        <span class="badge" style="background: var(--gold); color:#000;">التسليم والتهنئة (اللحظة الختامية)</span>
+                        <div class="lang-group">
+                            <span class="lang-lbl" style="color:var(--gold);">عربي</span>
+                            <div class="arabic-txt">القطعة وصلت سليمة عيني، تفضل شيك عليها وتأكد. تشوف خيرها ومبروك!</div>
+                        </div>
+                        <div class="lang-group">
+                            <span class="lang-lbl" style="color:var(--gold);">باديني</span>
+                            <div class="badini-txt">پارچە سالم گیهاند — دخازم تۆ چاو پێ بکی. پيرۆزە ب خێر بینیت!</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ==========================================
+         الفوتر الختامي (قسم التسويق)
+         ========================================== -->
+    <footer>
+        <div class="marketing-credit">
+            <i class="fa-solid fa-lightbulb"></i> صادر من قسم التسويق والتطوير
+        </div>
+        <br>
+        <a href="https://wa.me/9647502316274" class="wa-contact" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i> للتواصل المباشر مع قسم التسويق
+        </a>
+    </footer>
+
+    <!-- سكربت حركة هادئة وراقية -->
+    <script>
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            // عدد قليل جداً وحركة بطيئة جداً للفخامة والهدوء
+            let particleCount = window.innerWidth < 768 ? 20 : 40;
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: Math.random() * 2 + 0.5,
+                    // حركة شبه معدومة (هدوء تام)
+                    vx: Math.random() * 0.2 - 0.1, 
+                    vy: Math.random() * 0.2 - 0.1
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, width, height);
+            
+            ctx.fillStyle = 'rgba(16, 185, 129, 0.3)';
+            
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+
+                p.x += p.vx; p.y += p.vy;
+                
+                // حركة سلسة بدون قفزات
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+            });
+
+            // خطوط خفيفة جداً
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(16, 185, 129, ${(1 - dist/150) * 0.1})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(drawParticles);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        drawParticles();
+    </script>
+</body>
+</html>
+
